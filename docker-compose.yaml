@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  # PostgreSQL database service
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+  # Django application service
+  web:
+    build:
+      context: .
+    entrypoint: /code/entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
